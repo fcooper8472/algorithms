@@ -2,7 +2,7 @@ name: app tests
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master ]
   pull_request:
     branches: [ master, develop ]
 
@@ -18,16 +18,22 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: set up python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
+    - name: install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install -e .
+        pip install -e .[dev]
 
-    - name: Run tests
+    - name: flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --max-complexity=10 --max-line-length=100 --statistics
+      working-directory: algs
+
+    - name: run tests
       run: |
         pytest

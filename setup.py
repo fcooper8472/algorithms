@@ -10,9 +10,13 @@ setup(
     license='MIT',
     packages=['algs'],
     install_requires=[
-        'flake8',
-        'pytest',
         'streamlit',
     ],
+    extras_require={
+        'dev': [
+            'flake8',
+            'pytest',
+        ],
+    },
     zip_safe=False
 )
