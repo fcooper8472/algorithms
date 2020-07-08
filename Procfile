@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run algorithms.py
+web: sh setup.sh && python -m pip install . && streamlit run algorithms.py
