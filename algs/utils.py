@@ -4,10 +4,21 @@ from typing import Iterable, Union
 
 
 def app_dir():
-    return os.path.dirname(os.path.abspath(__file__))
+    """
+    :return: the absolute path of the directory containing the main streamlit app
+    """
+    return os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
 
 
 def code_block(path_to_file, markdown_lang=''):
+    """
+    Open a file and format the contents as a markdown code block of specified language. If the file
+    cannot be opened, a message will be returned indicating that.
+
+    :param path_to_file: path to the file containing code to be included
+    :param markdown_lang: (optional) language of markdown code block
+    :return: formatted markdown code block containing the contents of the file
+    """
     if os.path.isfile(path_to_file):
         file_content = open(path_to_file, 'r').read().strip()
         return f"```{markdown_lang}\n{file_content}\n```"
