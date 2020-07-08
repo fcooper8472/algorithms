@@ -1,3 +1,4 @@
+import algs
 import os
 
 import streamlit as st
@@ -59,7 +60,7 @@ def get_all_languages():
 
 
 def get_all_algorithms():
-    alg_dirs = os.listdir(os.path.join(script_dir(), 'algs'))
+    alg_dirs = [x for x in os.listdir(os.path.join(script_dir(), 'algs')) if not x.startswith('_')]
     return sorted([alg for alg in alg_dirs if os.path.isdir(os.path.join(script_dir(), 'algs', alg))])
 
 
@@ -114,3 +115,5 @@ selected_lang = format_from_lang(language_dropdown)
 code_file_name = f'{selected_alg}.{get_file_extension(selected_lang)}'
 
 st.markdown(code_block(os.path.join(script_dir(), 'code', selected_lang, selected_alg, code_file_name), selected_lang))
+
+st.title(algs.greet("World"))
