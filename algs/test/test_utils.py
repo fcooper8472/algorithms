@@ -31,4 +31,3 @@ def test_format_to_title():
 
     with pytest.raises(TypeError):
         algs.format_to_title(2)
-
