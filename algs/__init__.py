@@ -5,6 +5,7 @@ from .utils import format_lang_name
 from .utils import get_all_algorithms
 from .utils import get_all_languages
 from .utils import get_file_extension
+from .utils import homepage_markdown
 from .utils import implementations
 from .utils import markdown_content
 
@@ -19,6 +20,7 @@ __all__ = [
     'get_all_algorithms',
     'get_all_languages',
     'get_file_extension',
+    'homepage_markdown',
     'implementations',
     'markdown_content',
     'manifest_algs',

@@ -93,9 +93,10 @@ def test_get_all_algorithms():
     dir_contents = os.listdir(algs_dir)
 
     all_alg_dirs = []
-    for thing in dir_contents:
+    excludes = ['test', 'home']
+    for thing in [item for item in dir_contents if item not in excludes]:
         if os.path.isdir(os.path.join(algs_dir, thing)):
-            if not thing.startswith('_') and 'test' not in thing:
+            if not thing.startswith('_'):
                 all_alg_dirs.append(thing)
 
     assert sorted(all_alg_dirs) == sorted(algs.get_all_algorithms())
@@ -120,7 +121,23 @@ def test_get_file_extension():
     assert algs.get_file_extension('rust') == 'rs'
 
 
+def test_homepage_markdown():
+    homepage_content = algs.homepage_markdown()
+    assert 'Cannot find file' not in homepage_content
+    assert '{{{' not in homepage_content
+
+
 def test_implementations():
     for alg in algs.get_all_algorithms():
         for lang in algs.implementations(alg):
             assert os.path.isdir(os.path.join(algs.app_dir(), 'code', lang, alg))
+
+
+def test_markdown_content():
+    # check behaviour with known file
+    known_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'test_markdown.md')
+    expected_content = 'Some\n$$markdown$$\n- etc'
+    assert algs.markdown_content(known_file) == expected_content
+
+    # check behaviour with invalid file
+    assert algs.code_block('/path/to/fake/file') == 'Cannot find file /path/to/fake/file'
