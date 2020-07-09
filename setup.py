@@ -10,6 +10,9 @@ setup(
     license='MIT',
     packages=['algs'],
     install_requires=[
+        'altair',
+        'numpy',
+        'pandas',
         'pyyaml',
         'streamlit',
     ],

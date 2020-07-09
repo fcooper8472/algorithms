@@ -1,2 +1,5 @@
+altair
+numpy
+pandas
 pyyaml
 streamlit
