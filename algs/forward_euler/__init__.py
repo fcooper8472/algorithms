@@ -8,7 +8,7 @@ def forward_euler_content():
     st.header('Examples')
 
     example_dd = st.selectbox(
-        label="Pick an algorithm:",
+        label="Pick an example:",
         options=['Example 1', 'Example 2'],
     )
 
@@ -19,8 +19,8 @@ def forward_euler_content():
         rhs_fun = np.exp
         sol_fun = np.exp
     else:
-        ivp_latex = r'''y'(t)=\cos(t),\hspace{12pt}y(0)=0'''
-        exact_latex = r'''y(t)=\sin(t)'''
+        ivp_latex = r'''y'(t)=\cos(2t),\hspace{12pt}y(0)=0'''
+        exact_latex = r'''y(t)=\frac{1}{2}\sin(2t)'''
         init_val = 0.0
         rhs_fun = lambda t: np.cos(2 * t)
         sol_fun = lambda t: 0.5 * np.sin(2 * t)
@@ -30,8 +30,9 @@ def forward_euler_content():
     st.markdown(r'''with exact solution''')
     st.latex(exact_latex)
 
+    st.subheader('Select a step size h')
     h = st.slider(
-        label='Select a step size h',
+        label='',
         min_value=0.1,
         max_value=1.0,
         value=0.5,
