@@ -43,7 +43,7 @@ def display_alg_content(algorithm: str):
     """
     if not os.path.isfile(os.path.join(app_dir(), 'algs', algorithm, '__init__.py')):
         return
-    module = importlib.import_module(f'algs.{algorithm}')
+    importlib.import_module(f'algs.{algorithm}')
     alg_module = sys.modules.get(f'algs.{algorithm}')
     if alg_module:
         method_name = f'{algorithm}_content'
