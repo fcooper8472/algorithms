@@ -10,6 +10,7 @@ setup(
     license='MIT',
     packages=['algs'],
     install_requires=[
+        'pyyaml',
         'streamlit',
     ],
     extras_require={

@@ -1,0 +1,21 @@
+cpp:
+    display: C++
+    ext: hpp
+    impl:
+      - forward_euler
+      - gaussian_elimination
+julia:
+    display: Julia
+    ext: jl
+    impl:
+      - gaussian_elimination
+python:
+    display: Python
+    ext: py
+    impl:
+      - forward_euler
+rust:
+    display: Rust
+    ext: rs
+    impl:
+      - forward_euler
