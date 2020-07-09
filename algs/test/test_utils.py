@@ -77,6 +77,7 @@ def test_code_block():
 def test_format_alg_name():
     assert algs.format_alg_name('forward_euler') == 'Forward Euler'
     assert algs.format_alg_name('gaussian_elimination') == 'Gaussian Elimination'
+    assert algs.format_alg_name('something_else') == 'Something Else'
 
 
 def test_format_lang_name():
@@ -84,6 +85,7 @@ def test_format_lang_name():
     assert algs.format_lang_name('julia') == 'Julia'
     assert algs.format_lang_name('python') == 'Python'
     assert algs.format_lang_name('rust') == 'Rust'
+    assert algs.format_lang_name('something_else') == 'Something Else'
 
 
 def test_get_all_algorithms():

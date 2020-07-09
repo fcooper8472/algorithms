@@ -35,23 +35,25 @@ def code_block(path_to_file, markdown_lang=''):
 def format_alg_name(to_format: str):
     """
     Take a string representing the canonical name of an algorithm (e.g. forward_euler) and return
-    its display name (e.g. Forward Euler).
+    its display name (e.g. Forward Euler). Any other string is converted to title case.
 
     :param to_format: the canonical algorithm name
     :return: the algorithm's display name
     """
-    return manifest_algs.get(to_format).get('display')
+    alg_entry = manifest_algs.get(to_format)
+    return alg_entry.get('display') if alg_entry else to_format.title().replace('_', ' ')
 
 
 def format_lang_name(to_format: str):
     """
     Take a string representing the canonical name of a language (cpp, python, etc) and return its
-    formatted name (C++, Python, etc).
+    formatted name (C++, Python, etc). Any other string is converted to title case.
 
     :param to_format: the canonical language name
     :return: the formatted language name
     """
-    return manifest_code.get(to_format).get('display')
+    code_entry = manifest_code.get(to_format)
+    return code_entry.get('display') if code_entry else to_format.title().replace('_', ' ')
 
 
 def get_all_algorithms():
