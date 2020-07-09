@@ -1,4 +1,6 @@
+import importlib
 import os
+import sys
 import yaml
 
 
@@ -30,6 +32,24 @@ def code_block(path_to_file, markdown_lang=''):
         return f"```{markdown_lang}\n{file_content}\n```"
     else:
         return f'Cannot find file {path_to_file}'
+
+
+def display_alg_content(algorithm: str):
+    """
+    If the module algs.{algorithm} exists and contains a method {algorithm}_content, then call that
+    function, else do nothing.
+    :param algorithm:
+    :return:
+    """
+    if not os.path.isfile(os.path.join(app_dir(), 'algs', algorithm, '__init__.py')):
+        return
+    module = importlib.import_module(f'algs.{algorithm}')
+    print(module)
+    alg_module = sys.modules.get(f'algs.{algorithm}')
+    if alg_module:
+        method_name = f'{algorithm}_content'
+        if hasattr(alg_module, method_name):
+            getattr(alg_module, method_name)()
 
 
 def format_alg_name(to_format: str):

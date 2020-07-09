@@ -74,6 +74,14 @@ def test_code_block():
     assert algs.code_block('/path/to/fake/file') == 'Cannot find file /path/to/fake/file'
 
 
+def test_display_alg_content():
+    # Check that no exceptions are raised for any algorithm
+    for alg in algs.get_all_algorithms():
+        algs.display_alg_content(alg)
+    # Check that a non-existent directory does not raise an exception
+    algs.display_alg_content('fake_dir')
+
+
 def test_format_alg_name():
     assert algs.format_alg_name('forward_euler') == 'Forward Euler'
     assert algs.format_alg_name('gaussian_elimination') == 'Gaussian Elimination'

@@ -1,5 +1,6 @@
 from .utils import app_dir
 from .utils import code_block
+from .utils import display_alg_content
 from .utils import format_alg_name
 from .utils import format_lang_name
 from .utils import get_all_algorithms
@@ -15,6 +16,7 @@ from .utils import manifest_code
 __all__ = [
     'app_dir',
     'code_block',
+    'display_alg_content',
     'format_alg_name',
     'format_lang_name',
     'get_all_algorithms',

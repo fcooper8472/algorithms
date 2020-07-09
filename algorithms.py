@@ -28,6 +28,8 @@ else:
 
     md_file_name = f'{alg_dd}.md'
 
+    display_alg_content(alg_dd)
+
     st.markdown(markdown_content(os.path.join(app_dir(), 'algs', alg_dd, md_file_name)))
 
     st.subheader(f'{format_lang_name(language_dropdown)} implementation')
