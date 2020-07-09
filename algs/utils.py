@@ -1,4 +1,5 @@
 import os
+import yaml
 
 from typing import Iterable, Union
 
@@ -8,6 +9,13 @@ def app_dir():
     :return: the absolute path of the directory containing the main streamlit app
     """
     return os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+
+
+"""
+Load the manifest files once only
+"""
+manifest_algs = yaml.safe_load(open(os.path.join(app_dir(), 'manifest_algs.yaml'), 'r').read())
+manifest_code = yaml.safe_load(open(os.path.join(app_dir(), 'manifest_code.yaml'), 'r').read())
 
 
 def code_block(path_to_file, markdown_lang=''):

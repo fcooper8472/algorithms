@@ -1,0 +1,11 @@
+forward_euler:
+    display: Forward Euler
+    impl:
+      - cpp
+      - python
+      - rust
+gaussian_elimination:
+    display: Gaussian Elimination
+    impl:
+      - cpp
+      - julia

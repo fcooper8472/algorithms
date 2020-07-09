@@ -10,6 +10,9 @@ from .utils import get_file_extension
 from .utils import get_implemented_algorithms
 from .utils import markdown_content
 
+from .utils import manifest_algs
+from .utils import manifest_code
+
 __all__ = [
     'app_dir',
     'code_block',
@@ -22,4 +25,6 @@ __all__ = [
     'get_file_extension',
     'get_implemented_algorithms',
     'markdown_content',
+    'manifest_algs',
+    'manifest_code',
 ]
