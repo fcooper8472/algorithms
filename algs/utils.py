@@ -1,8 +1,6 @@
 import os
 import yaml
 
-from typing import Iterable, Union
-
 
 def app_dir():
     """
@@ -34,76 +32,60 @@ def code_block(path_to_file, markdown_lang=''):
         return f'Cannot find file {path_to_file}'
 
 
-def format_from_lang(to_format: Union[Iterable[str], str]):
-    if isinstance(to_format, str):
-        if to_format == 'C++':
-            return 'cpp'
-        else:
-            return to_format.lower()
-    else:
-        return [format_from_lang(x) for x in to_format]
-
-
-def format_from_title(to_format: Union[Iterable[str], str]):
-    if isinstance(to_format, str):
-        return to_format.lower().replace(' ', '_')
-    else:
-        return [format_from_title(x) for x in to_format]
-
-
-def format_to_lang(to_format: Union[Iterable[str], str]):
-    if isinstance(to_format, str):
-        if to_format == 'cpp':
-            return 'C++'
-        else:
-            return to_format.title()
-    else:
-        return [format_to_lang(x) for x in to_format]
-
-
-def format_to_title(to_format: Union[Iterable[str], str]):
+def format_alg_name(to_format: str):
     """
-    Take a string or iterable of strings and convert to title case, replacing any underscores with
-    spaces.
+    Take a string representing the canonical name of an algorithm (e.g. forward_euler) and return
+    its display name (e.g. Forward Euler).
 
-    :param to_format: the string or iterable of strings to format
-    :return: formatted string or list of strings
+    :param to_format: the canonical algorithm name
+    :return: the algorithm's display name
     """
-    if isinstance(to_format, str):
-        return to_format.title().replace('_', ' ')
-    else:
-        return [format_to_title(x) for x in to_format]
+    return manifest_algs.get(to_format).get('display')
+
+
+def format_lang_name(to_format: str):
+    """
+    Take a string representing the canonical name of a language (cpp, python, etc) and return its
+    formatted name (C++, Python, etc).
+
+    :param to_format: the canonical language name
+    :return: the formatted language name
+    """
+    return manifest_code.get(to_format).get('display')
 
 
 def get_all_algorithms():
-    alg_dirs = [x for x in os.listdir(os.path.join(app_dir(), 'algs')) if not x.startswith('_')]
-    return sorted([alg for alg in alg_dirs if os.path.isdir(os.path.join(app_dir(), 'algs', alg))])
+    """
+    :return: The list of all algorithms
+    """
+    return sorted(manifest_algs.keys())
 
 
 def get_all_languages():
-    lang_dirs = os.listdir(os.path.join(app_dir(), 'code'))
-    return sorted([lang for lang in lang_dirs if os.path.isdir(os.path.join(
-        app_dir(), 'code', lang))])
+    """
+    :return: The list of all languages that have implemented at least one algorithm
+    """
+    return sorted(manifest_code.keys())
 
 
 def get_file_extension(language: str):
-    extension_lookup = {
-        'cpp': 'hpp',
-        'julia': 'jl',
-        'python': 'py',
-        'rust': 'rs',
-    }
-    return extension_lookup[language]
+    """
+    Get the file extension for a given language.
+
+    :param language: the language
+    :return: the corresponding file extension
+    """
+    return manifest_code.get(language).get('ext')
 
 
-def get_implemented_algorithms():
-    algs = {}
-    for alg in get_all_algorithms():
-        algs[alg] = []
-        for lang in get_all_languages():
-            if os.path.isdir(os.path.join(app_dir(), 'code', lang, alg)):
-                algs[alg].append(lang)
-    return algs
+def implementations(algorithm: str):
+    """
+    Get all languages with an implementation for the given algorithm
+
+    :param algorithm: the algorithm
+    :return: list of languages with an implementation for the given algorithm
+    """
+    return manifest_algs.get(algorithm).get('impl')
 
 
 def markdown_content(path_to_file):

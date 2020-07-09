@@ -1,6 +1,5 @@
 import algs
 import os
-import pytest
 
 
 def test_app_dir():
@@ -75,10 +74,51 @@ def test_code_block():
     assert algs.code_block('/path/to/fake/file') == 'Cannot find file /path/to/fake/file'
 
 
-def test_format_to_title():
-    assert algs.format_to_title('hello_world') == 'Hello World'
-    assert algs.format_to_title([]) == []
-    assert algs.format_to_title(['a', 'a_b']) == ['A', 'A B']
+def test_format_alg_name():
+    assert algs.format_alg_name('forward_euler') == 'Forward Euler'
+    assert algs.format_alg_name('gaussian_elimination') == 'Gaussian Elimination'
 
-    with pytest.raises(TypeError):
-        algs.format_to_title(2)
+
+def test_format_lang_name():
+    assert algs.format_lang_name('cpp') == 'C++'
+    assert algs.format_lang_name('julia') == 'Julia'
+    assert algs.format_lang_name('python') == 'Python'
+    assert algs.format_lang_name('rust') == 'Rust'
+
+
+def test_get_all_algorithms():
+    algs_dir = os.path.join(algs.app_dir(), 'algs')
+    dir_contents = os.listdir(algs_dir)
+
+    all_alg_dirs = []
+    for thing in dir_contents:
+        if os.path.isdir(os.path.join(algs_dir, thing)):
+            if not thing.startswith('_') and 'test' not in thing:
+                all_alg_dirs.append(thing)
+
+    assert sorted(all_alg_dirs) == sorted(algs.get_all_algorithms())
+
+
+def test_get_all_languages():
+    code_dir = os.path.join(algs.app_dir(), 'code')
+    dir_contents = os.listdir(code_dir)
+
+    all_code_dirs = []
+    for thing in dir_contents:
+        if os.path.isdir(os.path.join(code_dir, thing)):
+            all_code_dirs.append(thing)
+
+    assert sorted(all_code_dirs) == sorted(algs.get_all_languages())
+
+
+def test_get_file_extension():
+    assert algs.get_file_extension('cpp') == 'hpp'
+    assert algs.get_file_extension('julia') == 'jl'
+    assert algs.get_file_extension('python') == 'py'
+    assert algs.get_file_extension('rust') == 'rs'
+
+
+def test_implementations():
+    for alg in algs.get_all_algorithms():
+        for lang in algs.implementations(alg):
+            assert os.path.isdir(os.path.join(algs.app_dir(), 'code', lang, alg))
