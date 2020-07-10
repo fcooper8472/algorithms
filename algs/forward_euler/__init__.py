@@ -60,24 +60,33 @@ def forward_euler_content():
     chart_y = sol_fun(chart_t)
 
     chart_exact_data = pd.DataFrame.from_dict({
-        'series': ['exact'] * len(chart_t),
+        'series': ['exact solution'] * len(chart_t),
         'time': chart_t,
         'solution': chart_y,
+        'abs error': [0] * len(chart_t),
     })
 
     chart_euler_data = pd.DataFrame.from_dict({
         'series': ['Forward Euler'] * len(calc_sol),
         'time': t_vals,
         'solution': calc_sol,
+        'abs error': np.abs(calc_sol - exact_sol),
     })
 
-    c = alt.Chart(pd.concat([chart_exact_data, chart_euler_data])).mark_line().encode(
+    line_chart = alt.Chart(pd.concat([chart_exact_data, chart_euler_data])).mark_line().encode(
         x='time',
         y='solution',
         color='series',
-        strokeDash='series',
-        tooltip=['time', 'solution']
+        strokeDash=alt.StrokeDash('series', legend=None),
     )
 
-    st.altair_chart(c, use_container_width=True)
+    point_chart = alt.Chart(chart_euler_data).mark_point().encode(
+        x='time',
+        y='solution',
+        color=alt.Color('series', legend=None),
+        tooltip=['time', 'solution', 'abs error'],
+    )
+    point_chart.add_selection(alt.selection_single())
+
+    st.altair_chart((point_chart + line_chart).interactive(), use_container_width=True)
     st.dataframe(table_data)
