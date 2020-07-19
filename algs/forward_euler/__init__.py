@@ -11,10 +11,14 @@ def insert_hand_sol(t, sol, h, rhs):
     st.latex(fr'''
 \begin{{aligned}}
 y({t[0]:.1f}) &= {sol[0]:.1f} \\
-y({t[1]:.1f}) &\approx y({t[0]:.1f}) + {h:.1f}\cdot {rhs}{t[0]:.1f})}} &=& {sol[0]:.4f} {sol_diff[0]:+.4f} &= {sol[1]:.4f} \\
-y({t[2]:.1f}) &\approx y({t[1]:.1f}) + {h:.1f}\cdot {rhs}{t[1]:.1f})}} &=& {sol[1]:.4f} {sol_diff[1]:+.4f} &= {sol[2]:.4f} \\
-y({t[3]:.1f}) &\approx y({t[2]:.1f}) + {h:.1f}\cdot {rhs}{t[2]:.1f})}} &=& {sol[2]:.4f} {sol_diff[2]:+.4f} &= {sol[3]:.4f} \\
-y({t[4]:.1f}) &\approx y({t[3]:.1f}) + {h:.1f}\cdot {rhs}{t[3]:.1f})}} &=& {sol[3]:.4f} {sol_diff[3]:+.4f} &= {sol[4]:.4f} \\
+y({t[1]:.1f}) &\approx y({t[0]:.1f}) + {h:.1f}\cdot {rhs}{t[0]:.1f})}} &= {sol[0]:.4f}
+{sol_diff[0]:+.4f} &= {sol[1]:.4f} \\
+y({t[2]:.1f}) &\approx y({t[1]:.1f}) + {h:.1f}\cdot {rhs}{t[1]:.1f})}} &= {sol[1]:.4f}
+{sol_diff[1]:+.4f} &= {sol[2]:.4f} \\
+y({t[3]:.1f}) &\approx y({t[2]:.1f}) + {h:.1f}\cdot {rhs}{t[2]:.1f})}} &= {sol[2]:.4f}
+{sol_diff[2]:+.4f} &= {sol[3]:.4f} \\
+y({t[4]:.1f}) &\approx y({t[3]:.1f}) + {h:.1f}\cdot {rhs}{t[3]:.1f})}} &= {sol[3]:.4f}
+{sol_diff[3]:+.4f} &= {sol[4]:.4f} \\
 \cdots
 \end{{aligned}}
 ''')
