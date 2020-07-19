@@ -5,8 +5,7 @@ import streamlit as st
 
 
 def insert_hand_sol(t, sol, h, rhs):
-
-    sol_diff = [sol[i] - sol[i-1] for i in range(1, len(sol))]
+    sol_diff = [sol[i] - sol[i - 1] for i in range(1, len(sol))]
 
     st.latex(fr'''
 \begin{{aligned}}
