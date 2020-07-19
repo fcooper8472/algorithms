@@ -4,6 +4,25 @@ import pandas as pd
 import streamlit as st
 
 
+def insert_hand_sol(t, sol, h, rhs):
+    sol_diff = [sol[i] - sol[i - 1] for i in range(1, len(sol))]
+
+    st.latex(fr'''
+\begin{{aligned}}
+y({t[0]:.1f}) &= {sol[0]:.1f} \\
+y({t[1]:.1f}) &\approx y({t[0]:.1f}) + {h:.1f}\cdot {rhs}{t[0]:.1f})}} &= {sol[0]:.4f}
+{sol_diff[0]:+.4f} &= {sol[1]:.4f} \\
+y({t[2]:.1f}) &\approx y({t[1]:.1f}) + {h:.1f}\cdot {rhs}{t[1]:.1f})}} &= {sol[1]:.4f}
+{sol_diff[1]:+.4f} &= {sol[2]:.4f} \\
+y({t[3]:.1f}) &\approx y({t[2]:.1f}) + {h:.1f}\cdot {rhs}{t[2]:.1f})}} &= {sol[2]:.4f}
+{sol_diff[2]:+.4f} &= {sol[3]:.4f} \\
+y({t[4]:.1f}) &\approx y({t[3]:.1f}) + {h:.1f}\cdot {rhs}{t[3]:.1f})}} &= {sol[3]:.4f}
+{sol_diff[3]:+.4f} &= {sol[4]:.4f} \\
+\cdots
+\end{{aligned}}
+''')
+
+
 def forward_euler_content():
     st.header('Examples')
 
@@ -15,12 +34,14 @@ def forward_euler_content():
     if example_dd == 'Example 1':
         ivp_latex = r'''y'(t)=e^t,\hspace{12pt}y(0)=1'''
         exact_latex = r'''y(t)=e^t'''
+        rhs_hand_str = r'''e^{('''
         init_val = 1.0
         rhs_fun = np.exp
         sol_fun = np.exp
     else:
         ivp_latex = r'''y'(t)=\cos(2t),\hspace{12pt}y(0)=0'''
         exact_latex = r'''y(t)=\frac{1}{2}\sin(2t)'''
+        rhs_hand_str = r'''\cos(2\cdot{'''
         init_val = 0.0
         rhs_fun = lambda t: np.cos(2 * t)
         sol_fun = lambda t: 0.5 * np.sin(2 * t)
@@ -48,6 +69,8 @@ def forward_euler_content():
         if i == 0:
             continue
         calc_sol[i] = calc_sol[i - 1] + h * rhs_fun(t_vals[i - 1])
+
+    insert_hand_sol(t_vals, calc_sol, h, rhs_hand_str)
 
     table_data = pd.DataFrame.from_dict({
         'time': t_vals,
